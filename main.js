@@ -11,10 +11,27 @@ const rl = readline.createInterface({
 });
 
 
-const pigLatin = (word) => {
+let pigLatin = (input) => {
 
-  // Your code here
+  let word = input.replace(/\s+/g, '').toLowerCase();
+  
+  //***** this is a different Method I found online  ******/
+  // let firstVowel = word.match(/[aeiou]/);
+  // let firstPosition = word.indexOf(firstVowel);
+  
+  let firstPosition = findFirstVowelPosition(word)
+  if (firstPosition > 0)  {
+    return word.slice(firstPosition) + '-' + word.slice(0, firstPosition) + 'ay';
+  }
+  return word +'-yay';
+};
 
+let findFirstVowelPosition = (word) =>  {
+  for (let i=0; i<word.length; i++)  {
+    if ("aeiou".indexOf(word[i]) !== -1) {
+      return i;
+    }
+  }
 }
 
 // the first function called in the program to get an input from the user
@@ -34,20 +51,20 @@ if (typeof describe === 'function') {
 
   describe('#pigLatin()', () => {
     it('should translate a simple word', () => {
-      assert.equal(pigLatin('car'), 'arcay');
-      assert.equal(pigLatin('dog'), 'ogday');
+      assert.equal(pigLatin('car'), 'ar-cay');
+      assert.equal(pigLatin('dog'), 'og-day');
     });
     it('should translate a complex word', () => {
-      assert.equal(pigLatin('create'), 'eatecray');
-      assert.equal(pigLatin('valley'), 'alleyvay');
+      assert.equal(pigLatin('create'), 'eate-cray');
+      assert.equal(pigLatin('valley'), 'alley-vay');
     });
     it('should attach "yay" if word begins with vowel', () => {
-      assert.equal(pigLatin('egg'), 'eggyay');
-      assert.equal(pigLatin('emission'), 'emissionyay');
+      assert.equal(pigLatin('egg'), 'egg-yay');
+      assert.equal(pigLatin('emission'), 'emission-yay');
     });
     it('should lowercase and trim word before translation', () => {
-      assert.equal(pigLatin('HeLlO '), 'ellohay');
-      assert.equal(pigLatin(' RoCkEt'), 'ocketray');
+      assert.equal(pigLatin('HeLlO '), 'ello-hay');
+      assert.equal(pigLatin(' RoCkEt'), 'ocket-ray');
     });
   });
 } else {
