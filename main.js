@@ -14,31 +14,41 @@ const rl = readline.createInterface({
 let pigLatin = (input) => {
 
   let word = input.replace(/\s+/g, '').toLowerCase();
-  
+    
   //***** this is a different Method I found online  ******/
   // let firstVowel = word.match(/[aeiou]/);
   // let firstPosition = word.indexOf(firstVowel);
-  
-  let firstPosition = findFirstVowelPosition(word)
-  if (firstPosition > 0)  {
-    return word.slice(firstPosition) + '-' + word.slice(0, firstPosition) + 'ay';
-  }
-  return word +'-yay';
-};
 
-let findFirstVowelPosition = (word) =>  {
-  for (let i=0; i<word.length; i++)  {
-    if ("aeiou".indexOf(word[i]) !== -1) {
-      return i;
+  let findFirstVowelPosition = (word) =>  {
+    for (let i=0; i<word.length; i++)  {
+      if ("aeiou".indexOf(word[i]) !== -1) {
+        return i;
+      }
     }
   }
-}
+    
+  let firstPosition = findFirstVowelPosition(word)
+  
+  if (firstPosition > 0)  {
+    return word.slice(firstPosition) + '-' + word.slice(0, firstPosition) + 'ay';
+  } else{
+  return word +'-yay';
+  }
+};
+
+// let findFirstVowelPosition = (word) =>  {
+//   for (let i=0; i<word.length; i++)  {
+//     if ("aeiou".indexOf(word[i]) !== -1) {
+//       return i;
+//     }
+//   }
+// }
 
 // the first function called in the program to get an input from the user
 // to run the function use the command: node main.js
 // to close it ctrl + C
 const getPrompt = () => {
-  rl.question('word ', (answer) => {
+  rl.question('Type here: ', (answer) => {
     console.log( pigLatin(answer) );
     getPrompt();
   });
